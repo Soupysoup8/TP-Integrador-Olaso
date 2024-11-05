@@ -2,22 +2,22 @@ import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 
 @Entity()
 export class User {
-    //@Column({primary: true, generated: true})
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({unique: true, nullable: false})
+    @Column()
     name: string;
 
-    @Column({unique: true, nullable: false})
-    email:string;
+    @Column({ unique: true, nullable: false })
+    email: string;
 
-    @Column({nullable: false})
-    password:string;
+    @Column({ nullable: false})
+    password: string;
 
-    @Column({default: "user"}) //when an account is created the default role will be user
-    role: string;
+    @Column({ default: "user" })
+    rol:string;
 
     @DeleteDateColumn()
     deletedAt: Date;
+
 }
