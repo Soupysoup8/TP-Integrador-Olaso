@@ -14,22 +14,25 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ){}
 
-    async register({name, email, password}: RegisterDto){
+    async register({name, email, password, dni}: RegisterDto){
         const user = await this.UserService.findOneByEmail(email);
-        
-        if (user){
+        const userdni = await this.UserService.findOneByDni(dni);
+
+        if (user && userdni){
             throw new BadRequestException("User already exist")
         }
 
         await this.UserService.create({
             name,
             email, 
-            password: await bcryptjs.hash(password, 10)
+            password: await bcryptjs.hash(password, 10),
+            dni,
         });
     }
 
-    async login({email, password}: loginDto){
+    async login({email, password, dni}: loginDto){
         const user = await this.UserService.findOneByEmail(email);
+
         if(!user){
             throw new UnauthorizedException("Email is Wrong")
         }
@@ -39,12 +42,16 @@ export class AuthService {
             throw new UnauthorizedException("Password is Wrong")
         }
 
-        const payload = { email: user.email};
+        if (user.dni !== dni) {
+            throw new UnauthorizedException("DNI incorrecto");
+        }
+
+        const payload = { email: user.email, dni: user.dni};
 
         const token = await this.jwtService.signAsync(payload);
         
         return {
-            token, email
+            token, email, dni
         };
     }
 }

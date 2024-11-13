@@ -12,6 +12,9 @@ export class User {
     email: string;
 
     @Column({ nullable: false})
+    dni: number;
+
+    @Column({ nullable: false})
     password: string;
 
     @Column({ default: "user" })

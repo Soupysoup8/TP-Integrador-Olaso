@@ -20,6 +20,10 @@ export class UsersService {
     return this.userRepository.findOneBy({ email })
   }
 
+  findOneByDni(dni:number){
+    return this.userRepository.findOneBy({ dni })
+  }
+
   findAll() {
     return `This action returns all users`;
   }
