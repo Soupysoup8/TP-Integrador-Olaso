@@ -13,8 +13,8 @@ export class ClientService {
     ){}
 
     async create(createClientDto: CreateClientDto) {
-        const supplier = this.clientRepository.create(createClientDto);
-        return await this.clientRepository.save(supplier);
+        const client = this.clientRepository.create(createClientDto);
+        return await this.clientRepository.save(client);
     }    
 
     async update(id: number, updateClientDto: UpdateClientDto){

@@ -46,7 +46,7 @@ export class AuthService {
             throw new UnauthorizedException("DNI incorrecto");
         }
 
-        const payload = { email: user.email, dni: user.dni};
+        const payload = { email: user.email };
 
         const token = await this.jwtService.signAsync(payload);
         

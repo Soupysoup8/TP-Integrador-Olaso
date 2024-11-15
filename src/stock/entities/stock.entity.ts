@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/product/entities/product.entity";
+import { StockMovement } from "src/stock_movements/entities/stock_movements.entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Stock{
@@ -6,17 +8,22 @@ export class Stock{
     id: number;
 
     @Column()
-    base_cuantity: number;
+    base_quantity: number;
 
     @Column()
-    type: number;
+    actual_quantity: number;
 
     @Column()
-    actual_cuantity: number;
+    min_quantity: number;
 
     @Column()
-    max_cuantity: number;
+    max_quantity: number;
 
-    @Column()
-    min_cuantity: number;
+    @OneToMany(() => StockMovement, stockMovement => stockMovement.stock)
+    movements: StockMovement[]; 
+
+    @OneToOne(() => Product, product => product.stock)
+    @JoinColumn()
+    product: Product;  
+
 }

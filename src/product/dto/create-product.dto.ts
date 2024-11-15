@@ -1,4 +1,6 @@
-import { IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsOptional, IsString, ValidateNested } from "class-validator";
+import { CreateStockDto } from "src/stock/dto/create-stock.dto";
 
 export class CreateProductDto {
     
@@ -14,4 +16,8 @@ export class CreateProductDto {
     @IsOptional()
     @IsString()
     state?: string;
+
+    @ValidateNested()
+    @Type(() => CreateStockDto)
+    stock: CreateStockDto;
 }

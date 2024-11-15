@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ClientService } from './client.service';
 import { CreateClientDto } from "./dto/create-client.dto";
 import { UpdateClientDto } from "./dto/update-client";
@@ -37,7 +37,7 @@ export class ClientController {
         return this.clientService.update(+id, updateClientDto);
     }
 
-    @Patch(':id/delete')
+    @Delete(':id/inactivate')
     delete(@Param('id') id: string){
         return this.clientService.delete(+id)
     }

@@ -1,6 +1,8 @@
 import { IsEmail, IsPhoneNumber } from "class-validator";
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { SupplierProduct } from "src/supplier_product/entity/supplier-product.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Supplier{
 
     @PrimaryGeneratedColumn()
@@ -16,13 +18,14 @@ export class Supplier{
     address: string;
 
     @Column()
-    @IsPhoneNumber()
-    contact: number;
+    contact: string;
 
     @Column()
-    @IsEmail()
     email: string;
 
     @Column({default: 'Activo'})
     state: string;
+
+    @OneToMany(() => SupplierProduct, (supplierProduct) => supplierProduct.supplier)
+    requests: SupplierProduct[];
 }

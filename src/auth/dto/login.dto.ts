@@ -10,8 +10,6 @@ export class loginDto{
     @MinLength(6)
     password: string;
 
-    @Transform(({value}) => value.trim())
     @IsNumber()
-    @Length(8)
     dni: number;
 }

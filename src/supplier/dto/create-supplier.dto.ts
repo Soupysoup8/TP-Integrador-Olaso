@@ -10,8 +10,8 @@ export class CreateSupplierDto {
     @IsString()
     address: string;
 
-    @IsPhoneNumber()
-    contact: number;
+    @IsPhoneNumber(null)
+    contact: string;
 
     @IsEmail()
     email: string;

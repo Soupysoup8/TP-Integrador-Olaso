@@ -1,6 +1,20 @@
+import { IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+
 export class CreateStockDto{
-    base_cuantity: number;
-    type: number;
-    max_cuantity: number;
-    min_cuantity: number;
+
+    @IsPositive()
+    @IsNumber()
+    @IsPositive()
+    base_quantity: number;
+
+    @IsPositive()
+    @IsNumber()
+    @IsPositive()
+    min_quantity: number;
+
+    @IsPositive()
+    @IsNumber()
+    @IsPositive()
+    max_quantity: number;
+    
 }

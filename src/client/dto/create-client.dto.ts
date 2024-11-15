@@ -10,8 +10,8 @@ export class CreateClientDto {
     @IsString()
     address: string;
 
-    @IsPhoneNumber()
-    number: number;
+    @IsPhoneNumber(null)
+    contact: string;
 
     @IsEmail()
     email: string;

@@ -5,7 +5,7 @@ import { AppModule } from "./app.module";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix("api/v1");
+  app.setGlobalPrefix("api/tpOlaso/v0");
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -15,6 +15,12 @@ async function bootstrap() {
     })
   );
 
-  await app.listen(3001);
+  app.enableCors({
+    origin: 'http://localhost:3002'
+  });
+
+  await app.listen(3001);  
+  console.log('Backend corriendo en http://localhost:3001');
+
 }
 bootstrap();

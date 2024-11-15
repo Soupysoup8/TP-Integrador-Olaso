@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { ProductService } from './product.service';
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product";
+import { UpdateStockDto } from "src/stock/dto/update-stock.dto";
+import { UpdateStockMovementDto } from "src/stock/dto/update-stock-movements.dto";
 
 @Controller('product')
 export class ProductController {
@@ -11,7 +13,7 @@ export class ProductController {
     create(@Body() createProductDto: CreateProductDto){
         return this.productService.create(createProductDto);
     }
-
+    
     @Get()
     findAll(){
         return this.productService.findAll();
@@ -37,8 +39,18 @@ export class ProductController {
         return this.productService.update(+id, updateProductDto);
     }
 
+    @Patch(':id/update-attributes')
+    updateStockAttributes(@Param('id') id: number, @Body() updateStockDto: UpdateStockDto) {
+        return this.productService.updateStock(id, updateStockDto);
+    }
+
+    @Patch(':id/update-movement')
+    updateStockMovement(@Param('id') id: number, @Body() updateStockMovementDto: UpdateStockMovementDto) {
+        return this.productService.updateStockMovement(id, updateStockMovementDto);
+    }
+
     @Patch(':id/delete')
-    delete(@Param('id') id: string){
+    softDelete(@Param('id') id: string){
         return this.productService.delete(+id)
     }
 }
