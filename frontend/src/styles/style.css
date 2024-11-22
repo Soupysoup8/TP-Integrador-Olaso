@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html {
+    background-color: #fbfbfb;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Corregido el nombre de la fuente */
+    margin: 0;
+}
+
+#sideMenuBar {
+    background-color: #cecece;
+    color: #000000;
+    height: 100%;
+    position: fixed;
+    width: 260px;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 160px;
+    padding-right: 20px;
+    z-index: 100; /* Asegura que la barra lateral esté por encima del contenido */
+}
+
+#sideMenuBar a {
+    text-decoration: none;
+    color: #000000;
+}
+
+#sideMenuBar ul {
+    list-style-type: none; 
+    margin: 0;
+}
+
+#sideMenuBar li {
+    margin-left: 25px;
+}
+
+#sideMenuBar a:hover {
+    color: #949494;
+    background-color: #f1f1f1;
+    border-radius: 50px;
+}
+
+.dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.menuProducts, .menuSuppliers, .menuClients {
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 40%;
+    z-index: 10;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    display: flexbox;
+}
+
+ul li {
+    padding-left: 10px;
+    padding: 8px;
+    cursor: pointer;
+    flex-wrap: wrap;
+}
+
+ul li:hover {
+    background-color: #f0f0f0;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+input[type="number"]{
+    width: 20%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+#registerEntities,
+#allMovementsPage,
+#registerMovementsPage,
+#inventoryPage {
+    margin-left: 300px; /* Añadido para que el contenido no se superponga */
+}
+
+.alertaStock {
+    background-color: #ffb8b8;
+    border: 3px dotted #ff9292;
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    padding: 10px;
+}
+
+#registerEntities{
+    margin-left: 320px;
+}
+
+#registerEntities h2, #registerMovementsPage h2{
+    margin-top: 90px;
+    font-size:xx-large;
+}
+
+#formStockMovement h2{
+    font-size:x-large;
+}
+
+#registerEntities button{
+    font-size: 17px;
+    padding: 11px;
+    border-radius: 20px;
+}
+
+#formClient button, #formSupplier button, #formProduct button, #formStockMovement button[type="submit"], #divFormRegisterUser button{
+    background-color: #1c1c1c;
+    align-self: flex-end; 
+    color: #f1f1f1;
+    font-size: 17px;
+    padding: 11px;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+
+#divFormLogin button, #divFormRegister{
+    background-color: #1c1c1c;
+    color: #f1f1f1;
+    border-radius: 20px;
+    padding: 11px;
+    font-size: 17px;
+}
+
+#formProduct button:hover, #formClient button:hover, #formSupplier button:hover, #formStockMovement button[type="submit"]:hover, #divFormRegisterUser button:hover{
+    background-color: #575757; /* Cambia el color al pasar el mouse */
+}
+
+#divFormProduct, #divFormClient, #divFormSupplier, #divStockMovement{
+    border: 3px solid #1d1d1d;
+    border-radius: 40px;
+    margin-top: 30px;
+    margin-left: 0px;
+    max-width: 1050px;
+}
+
+#divFormLogin{
+    justify-content: center;
+    border: 3px solid #1d1d1d;
+    border-radius: 40px;
+    margin: 0 auto;
+    margin-top: 10%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f5f5;
+}
+
+#divFormRegister{
+    justify-content: center;
+    border: 3px solid #1d1d1d;
+    border-radius: 40px;
+    margin: 0 auto;
+    margin-top: 8%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f5f5;
+}
+
+#divStockMovement {
+    display: flex; 
+    flex-direction: column; 
+    width: 100%;
+}
+
+#formProduct h2, #formSupplier h2, #formClient h2{
+    margin-top: 40px;
+}
+
+#formStockMovement h2{
+    margin-top: 60px;
+}
+
+#formProduct, #formSupplier, #formClient, #formStockMovement{
+    margin-left: 70px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#formLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginContainer label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.productosUl, .supplierUl {
+    list-style-type: circle; 
+    margin: 0;
+    padding: 10px;
+    min-width: 100px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start; 
+    width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor padre */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 10px; /* Evita que el padding interno lo achique demasiado */
+    box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+}
+
+.productosLi, .supplierLi, .clientLi{
+    display: inline;
+}
+
+.clientSection, .supplierSection, .createProductSection, .movementSection {
+    width: 45%;
+    padding: 10px;
+    border-right: 1px solid #ccc; /* Separador visual */
+}
+
+.createProductSection{
+    width: 61%;
+}
+
+ .supplierClientSection {
+    width: 45%;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 0;
+}
+
+.productSection {
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.productSectionEntities {
+    margin-bottom: 0;
+    margin-left: 30px;
+}
+
+.stockSection{
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-right: 10px;}
+
+.divProductosUl, .divSupplierUl, .divClientUl{
+    display: block;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.menuProducts {
+    width: 427px;
+    margin-top: 0; /* Elimina cualquier margen adicional */
+    padding: 0; /* Si tiene padding, también se ajusta */
+}
+
+
+
+.menuSuppliers, .menuClients{
+    width: 427px;
+    margin-top: 0; /* Elimina cualquier margen adicional */
+    padding: 0; /* Si tiene padding, también se ajusta */
+}
+
+#inputSearchQuery{
+    width: 409px;   
+}
+
+input[type="text"], input[type="email"],input[type="password"], select{
+    width: 250px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.productStockContainer {
+    display: flex;
+}
+
+.stockSection ul li{
+    padding: 0;
+    margin-right: 120px;
+}
+
+.stockSection{
+    padding: 0;
+    margin-left: 50px;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+th, td {
+    border-bottom: 1px solid #dadada;
+}
+
+th{
+    background-color: #646464;
+    color: #f0f0f0;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover{
+    background-color: #dbdbdb;
+}
+
+.tableProducts, .tableStockMovements {
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.tableProducts th, .tableStockMovements th {
+    padding: 30px;
+}
+
+.tableProducts td, .tableStockMovements td{
+    padding: 10px
+}
+
+#allMovementsPage h1, #inventoryPage h1{
+    margin-top: 90px;
+    font-size:xx-large;
+}
+
+.contenido{
+    margin-top: 150px;
+    margin-left: 300px; 
+}
+p{
+    font-size: 18px;
+}
+
+.logo img{
+    margin-top:-130px;
+    height: 170px;
+    justify-content: center;
+}
+
+.logo {
+    display: flex; /* Habilitar flexbox */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* (Opcional) Centrar verticalmente si es necesario */
+    width: 100%; /* Asegurarte de usar todo el ancho del menú */
+    margin-bottom: 20px; /* Espaciado inferior opcional */
+}
+
+
+.logo{
+    display: flex;
+}
+
+.menu{
+    margin-top: 170px;
+}
+
+.menu li{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#divFormRegisterUser{
+    background-color: #eaeaea;
+    max-width: 600px;
+    border:1px solid #000000;
+    border-radius: 30px;
+}
+
+.formRegisterUserContainer {
+    display: flex;
+    justify-content: flex-start; 
+    width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor padre */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 10px; /* Evita que el padding interno lo achique demasiado */
+    box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between; /* Botones a izquierda y derecha */
+    margin-top: 20px;
+}
+
+.loginContainer input {
+    width: 94%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.loginContainer h1{
+    display: flex;
+    justify-content: center;
+}
+
+#logOut{
+    margin:30px;
+    margin-left: 25px;
+    padding: 15px;
+    border: 1px solid #b0b0b0;
+    border-radius: 10px ;
+}
