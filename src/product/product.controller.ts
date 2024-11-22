@@ -1,26 +1,30 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, NotFoundException, Param, Patch, Post } from "@nestjs/common";
 import { ProductService } from './product.service';
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product";
 import { UpdateStockDto } from "src/stock/dto/update-stock.dto";
 import { UpdateStockMovementDto } from "src/stock/dto/update-stock-movements.dto";
+import { CreateProductWithStockDto } from "src/stock/dto/createProducWithStock.dto";
+import { plainToInstance } from "class-transformer";
+import { Product } from "./entities/product.entity";
+import { UpdateProductDto } from "./dto/update-product";
 
 @Controller('product')
 export class ProductController {
-    constructor(private readonly productService: ProductService){}
+  constructor(private readonly productService: ProductService) {}
 
-    @Post()
-    create(@Body() createProductDto: CreateProductDto){
-        return this.productService.create(createProductDto);
+    @Post('product-with-stock')
+    async createProductWithStock(@Body() createProductWithStockDto: CreateProductWithStockDto) {
+        const { product, stock } = createProductWithStockDto;
+        return this.productService.createProductWithStock(product, stock);
     }
     
     @Get()
-    findAll(){
-        return this.productService.findAll();
+    async findAll() {
+        const products = await this.productService.findAll();
+        return plainToInstance(Product, products);
     }
 
     @Get('id/:id')
-    findOneById(@Param('id') id:number){
+    getProductById(@Param('id') id:number){
         return this.productService.findOneById(+id);
     }
 
@@ -35,7 +39,7 @@ export class ProductController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto ) {
+    update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
         return this.productService.update(+id, updateProductDto);
     }
 
@@ -52,5 +56,15 @@ export class ProductController {
     @Patch(':id/delete')
     softDelete(@Param('id') id: string){
         return this.productService.delete(+id)
+    }
+
+    @Get('product-with-stock')
+    async getProductsWithStock(): Promise<Product[]> {
+        return this.productService.getProductsWithStock();
+    }
+
+    @Get('details')
+    async getProductDetails() {
+        return this.productService.getProductDetails();
     }
 }

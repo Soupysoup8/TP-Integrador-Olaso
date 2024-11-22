@@ -12,6 +12,6 @@ import { ClientProductController } from './client_product.controller';
     ],
     controllers: [ClientProductController],
     providers: [ClientProductService],
-    exports: [ClientProductService],
+    exports: [TypeOrmModule], // Exporta el TypeOrmModule para que otros módulos puedan acceder al repositorio
 })
 export class ClientProductModule {}

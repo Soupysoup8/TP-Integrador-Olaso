@@ -12,6 +12,6 @@ import { SupplierProductService } from './supplier-product.service';
     ],
     controllers: [SupplierProductController],
     providers: [SupplierProductService],
-    exports: [SupplierProductService],
+    exports: [TypeOrmModule], // Exporta el TypeOrmModule para que otros módulos puedan acceder al repositorio
 })
 export class SupplierProductModule {}

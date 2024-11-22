@@ -7,6 +7,7 @@ import { ClientModule } from './client/client.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { SupplierProductModule } from './supplier_product/supplier-product.module';
 import { ClientProductModule } from './client_product/client_product.module';
+import { StockModule } from './stock_movements/stock_movements.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { ClientProductModule } from './client_product/client_product.module';
     ClientProductModule,
     SupplierModule,
     SupplierProductModule,
-
+    StockModule,
   ],
   controllers: [],
   providers: [],

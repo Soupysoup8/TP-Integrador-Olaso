@@ -23,5 +23,4 @@ export class SupplierProductController{
     ) {
         return this.supplierProductService.update(supplierId, productId, requestedQuantity);
     }
-
 }

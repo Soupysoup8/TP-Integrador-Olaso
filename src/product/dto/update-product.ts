@@ -2,7 +2,6 @@ import { IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { UpdateStockDto } from "src/stock/dto/update-stock.dto";
 
-
 export class UpdateProductDto {
     @IsOptional()
     @IsString()

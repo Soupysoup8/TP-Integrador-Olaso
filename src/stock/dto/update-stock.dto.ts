@@ -1,18 +1,22 @@
-import { IsOptional, IsString, IsNumber, ValidateNested, IsPositive } from "class-validator";
+import { IsOptional, IsNumber, IsPositive } from 'class-validator';
 
 export class UpdateStockDto {
-    @IsPositive()
     @IsOptional()
+    @IsPositive()
     @IsNumber()
     base_quantity?: number;
 
-    @IsPositive()
     @IsOptional()
+    @IsPositive()
     @IsNumber()
     min_quantity?: number;
 
-    @IsPositive()
     @IsOptional()
+    @IsPositive()
     @IsNumber()
     max_quantity?: number;
+
+    @IsOptional()
+    @IsNumber()
+    product_id?: number;  // Esto debería ser opcional si lo estás permitiendo en el PATCH
 }

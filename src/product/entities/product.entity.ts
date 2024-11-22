@@ -1,3 +1,4 @@
+import { Exclude, Expose } from "class-transformer";
 import { ClientProduct } from "src/client_product/entities/client_product.entity";
 import { Stock } from "src/stock/entities/stock.entity";
 import { SupplierProduct } from "src/supplier_product/entity/supplier-product.entity";
@@ -21,9 +22,9 @@ export class Product{
     @Column({default: 'Activo'})
     state: string;
 
-    @OneToOne(() => Stock)
+    @OneToOne(() => Stock, (stock) => stock.product, { cascade: true })
     @JoinColumn({ name: 'stock_id' })
-    stock: Stock;  
+    stock: Stock;
 
     @OneToMany(() => ClientProduct, request => request.product)
     requestsClient: ClientProduct[];

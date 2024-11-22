@@ -1,20 +1,46 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Supplier } from './entities/supplier.entity';
 import { Repository } from "typeorm";
 import { CreateSupplierDto } from "./dto/create-supplier.dto";
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
+import { SupplierProduct } from "src/supplier_product/entity/supplier-product.entity";
+import { Supplier } from './entities/supplier.entity';
+import { Product } from "src/product/entities/product.entity";
 
 @Injectable()
 export class SupplierService {
     constructor(
         @InjectRepository(Supplier)
-        private readonly supplierRepository: Repository<Supplier>
+        private readonly supplierRepository: Repository<Supplier>,
+
+        @InjectRepository(SupplierProduct)
+        private readonly supplierProductRepository: Repository<SupplierProduct>,
+
+        @InjectRepository(Product)
+        private readonly productRepository: Repository<Product>,
+
     ){}
 
     async create(createSupplierDto: CreateSupplierDto) {
         const supplier = this.supplierRepository.create(createSupplierDto);
-        return await this.supplierRepository.save(supplier);
+        await this.supplierRepository.save(supplier)
+
+        if (createSupplierDto.selectedProductIds){
+            for (const productId of createSupplierDto.selectedProductIds){
+                const product = await this.productRepository.findOne({ where: { id: productId } });
+                if (product){
+                    const supplierProduct = this.supplierProductRepository.create({
+                        supplier,
+                        product,
+                        requestedQuantity: 1,
+                    });
+
+                    await this.supplierProductRepository.save(supplierProduct);
+                } else {
+                    throw new NotFoundException(`Producto con ID ${productId} no encontrado`);
+                }
+            }
+        }
     }    
 
     async update(id: number, updateSupplierDto: UpdateSupplierDto){

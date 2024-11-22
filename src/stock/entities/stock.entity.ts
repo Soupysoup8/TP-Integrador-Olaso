@@ -1,6 +1,7 @@
+import { Exclude } from "class-transformer";
 import { Product } from "src/product/entities/product.entity";
 import { StockMovement } from "src/stock_movements/entities/stock_movements.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Stock{
@@ -18,12 +19,12 @@ export class Stock{
 
     @Column()
     max_quantity: number;
-
+    
     @OneToMany(() => StockMovement, stockMovement => stockMovement.stock)
     movements: StockMovement[]; 
 
-    @OneToOne(() => Product, product => product.stock)
-    @JoinColumn()
-    product: Product;  
-
+    @OneToOne(() => Product, (product) => product.stock, { eager: false, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'stock_id' })
+    @Exclude() // Esto evitará que se incluya en las respuestas
+    product: Product;
 }

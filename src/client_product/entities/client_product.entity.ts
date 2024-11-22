@@ -4,15 +4,15 @@ import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ClientProduct {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Client, client => client.requests)
-    client: Client;
+  @ManyToOne(() => Client, (client) => client.requests)
+  client: Client;
 
-    @ManyToOne(() => Product, product => product.requestsClient)
-    product: Product;
+  @ManyToOne(() => Product, (product) => product.requestsClient)
+  product: Product;
 
-    @Column()
-    requestedQuantity: number;
+  @Column()
+  requestedQuantity: number;
 }

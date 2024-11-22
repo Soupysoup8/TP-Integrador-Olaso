@@ -1,4 +1,3 @@
-import { IsEmail, IsPhoneNumber } from "class-validator";
 import { SupplierProduct } from "src/supplier_product/entity/supplier-product.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 

@@ -1,20 +1,27 @@
-import { IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { Exclude, Type } from "class-transformer";
+import { IsNumber, IsOptional, IsPositive, IsString, ValidateNested } from "class-validator";
+import { Product } from "src/product/entities/product.entity";
 
 export class CreateStockDto{
 
-    @IsPositive()
     @IsNumber()
     @IsPositive()
     base_quantity: number;
 
-    @IsPositive()
     @IsNumber()
     @IsPositive()
     min_quantity: number;
 
-    @IsPositive()
     @IsNumber()
     @IsPositive()
     max_quantity: number;
-    
+
+    @IsOptional()
+    @IsNumber()
+    actual_quantity?: number;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => Product)  // Asegura que la propiedad sea transformada como un objeto Product
+    product?: Product; 
 }
