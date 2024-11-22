@@ -6,9 +6,10 @@ function FormProduct() {
         sector: '',
         brand: '',
         stock: {
-            base_quantity: 0,
-            min_quantity: 0,
-            max_quantity: 0
+            base_quantity: 1,
+            actual_quantity: 1, // Inicializamos la cantidad actual igual a la base
+            min_quantity: 1,
+            max_quantity: 1
         }
     });
 
@@ -16,57 +17,72 @@ function FormProduct() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProductData({
-            ...productData,
-            [name]: value
-        });
+
+        // Si el campo no está relacionado con el stock, actualiza el estado del producto normal
+        if (name !== "base_quantity" && name !== "min_quantity" && name !== "max_quantity") {
+            setProductData({
+                ...productData,
+                [name]: value
+            });
+        }
     };
 
     const handleStockChange = (e) => {
         const { name, value } = e.target;
-        setProductData({
-            ...productData,
+    
+        setProductData(prevState => ({
+            ...prevState,
             stock: {
-                ...productData.stock,
+                ...prevState.stock,
                 [name]: value
             }
-        });
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        // Convertir las cantidades a números
+        // Asignar base_quantity como actual_quantity al crear el producto
         const { base_quantity, min_quantity, max_quantity } = productData.stock;
+    
         const updatedProductData = {
-            ...productData,
+            product: {
+                name: productData.name,
+                sector: productData.sector,
+                brand: productData.brand,
+            },
             stock: {
-                ...productData.stock,
-                base_quantity: Number(base_quantity), // Asegurarse de que sea un número
+                base_quantity: Number(base_quantity),
+                actual_quantity: Number(base_quantity), // La cantidad actual es igual a la base
                 min_quantity: Number(min_quantity),
-                max_quantity: Number(max_quantity)
-            }
+                max_quantity: Number(max_quantity),
+            },
         };
     
         // Verificar los valores numéricos
         if (updatedProductData.stock.base_quantity <= 0 || updatedProductData.stock.min_quantity <= 0 || updatedProductData.stock.max_quantity <= 0) {
-            console.error('Los valores de cantidad deben ser números positivos.');
+            setMessage('Los valores de cantidad deben ser números positivos.');
+            return;
+        }
+    
+        // Verificar que la cantidad mínima no sea mayor que la máxima
+        if (updatedProductData.stock.min_quantity > updatedProductData.stock.max_quantity) {
+            setMessage('La cantidad mínima no puede ser mayor que la cantidad máxima.');
             return;
         }
     
         try {
-            const response = await fetch('http://localhost:3001/api/tpOlaso/v0/product', {
+            const response = await fetch('http://localhost:3001/api/tpOlaso/v0/product/product-with-stock', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedProductData),
+                body: JSON.stringify(updatedProductData), // Enviar los datos con la estructura correcta
             });
 
             if (response.ok) {
                 const result = await response.json();
                 setMessage(`Producto creado exitosamente: ${result.name}`);
-                alert(`Producto creado con ID de stock: ${result.stockId}`);
             } else {
                 const error = await response.json();
                 setMessage(`Error al crear el producto: ${error.message || 'Intente de nuevo.'}`);
@@ -75,85 +91,91 @@ function FormProduct() {
             setMessage(`Error de conexión: ${error.message}`);
         }
     };    
-    
 
     return (
-        <form onSubmit={handleSubmit} className='formProduct'>
-            <h2>Formulario de Producto</h2>
+        <div id="divFormProduct">
+        <form onSubmit={handleSubmit} id='formProduct'>
+            <h2>Registro de Producto</h2>
 
-            <label>
-                Nombre:
-                <input
-                    type="text"
-                    name="name"
-                    value={productData.name}
-                    onChange={handleChange}
-                    required
-                />
-            </label>
+            <div className='container'>
+                <div className='createProductSection'>
+                    <label>Nombre:</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={productData.name}
+                            onChange={handleChange}
+                            required
+                        />
 
+                    <label>Sector:</label>
+                    <select
+                        name="sector"
+                        value={productData.sector}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Seleccione un sector</option>
+                        <option value="agricultura">Agricultura</option>
+                        <option value="maquinaria">Maquinaria</option>
+                    </select>
 
-            <label>Sector</label>
-            <select
-                name="sector"
-                value={productData.sector}
-                onChange={handleChange}
-                required
-            >
-                <option value="">Seleccione un sector</option>
-                <option value="agricultura">Agricultura</option>
-                <option value="maquinaria">Maquinaria</option>
-            </select>
+                    <label>Marca:</label>
+                        <input
+                            type="text"
+                            name="brand"
+                            value={productData.brand}
+                            onChange={handleChange}
+                            required
+                    />
+                </div>
 
+                <div className='stockSection'>
+                    <h3>Agregue los detalles del stock</h3>
+                    <label>
+                        Cantidad base:
+                        <input
+                            type="number"
+                            name="base_quantity"
+                            min="1" pattern="^[0-9]+"
+                            value={productData.stock.base_quantity}
+                            onChange={handleStockChange}
+                            required
+                        />
+                    </label>
 
-            <label>
-                Marca:
-                <input
-                    type="text"
-                    name="brand"
-                    value={productData.brand}
-                    onChange={handleChange}
-                    required
-                />
-            </label>
+                    <label>
+                        Cantidad mínima:
+                        <input
+                            type="number"
+                            name="min_quantity"
+                            min="1" pattern="^[0-9]+"
+                            value={productData.stock.min_quantity}
+                            onChange={handleStockChange}
+                            required
+                        />
+                    </label>
 
-            <h3>Stock</h3>
+                    <label>
+                        Cantidad máxima:
+                        <input
+                            type="number"
+                            name="max_quantity"
+                            min="1" pattern="^[0-9]+"
+                            value={productData.stock.max_quantity}
+                            onChange={handleStockChange}
+                            required
+                        />
+                    </label>
+                </div>
 
-            <label>
-                Cantidad base:
-                <input
-                    type="number"
-                    name="base_quantity"
-                    value={productData.stock.base_quantity}
-                    onChange={handleStockChange}
-                    required
-                />
-            </label>
+                <button type="submit">Guardar</button>
 
-            <label>
-                Cantidad mínima:
-                <input
-                    type="number"
-                    name="min_quantity"
-                    value={productData.stock.min_quantity}
-                    onChange={handleStockChange}
-                    required
-                />
-            </label>
-
-            <label>
-                Cantidad máxima:
-                <input
-                    type="number"
-                    name="max_quantity"
-                    value={productData.stock.max_quantity}
-                    onChange={handleStockChange}
-                    required
-                />
-            </label>
-
-            <button type="submit">Guardar Producto</button>
-        </form>
+                {message && <div className="message">{message}</div>}  
+                </div>
+            </form>
+            
+        </div>
     );
 }
 

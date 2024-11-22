@@ -7,7 +7,7 @@ function Menubar() {
             <ul>
                 <li>
                     <NavLink 
-                        to="/home" 
+                        to="/" 
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         Inicio
@@ -34,19 +34,19 @@ function Menubar() {
 
                 <li>
                     <NavLink 
-                        to="/allMovements"
+                        to="/inventory"
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
-                        Movimientos
+                        Inventario
                     </NavLink>
                 </li>
 
                 <li>
                     <NavLink 
-                        to="/inventory"
+                        to="/allMovements"
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
-                        Inventario
+                        Movimientos
                     </NavLink>
                 </li>
             </ul>

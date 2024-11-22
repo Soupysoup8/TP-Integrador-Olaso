@@ -5,8 +5,9 @@ import FormStockMovement from "../components/registerMovements/FormStockMovement
 
 function RegisterMovementsPage() {
     return(
-        <div>
+        <div id="registerMovementsPage">
             <Menubar />
+            <h2>Registro de Movimiento de Stock</h2>
             <FormStockMovement />
         </div>
     )
